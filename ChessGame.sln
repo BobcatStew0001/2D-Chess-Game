@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess_Backend", "Chess_Backend\Chess_Backend.csproj", "{EEC435DB-FEBC-4EA6-938E-4E5EC58603E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess_Frontend", "Chess_Frontend\Chess_Frontend.csproj", "{2316BAD0-290F-4CC5-A365-55136D0DB8A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEC435DB-FEBC-4EA6-938E-4E5EC58603E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEC435DB-FEBC-4EA6-938E-4E5EC58603E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEC435DB-FEBC-4EA6-938E-4E5EC58603E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEC435DB-FEBC-4EA6-938E-4E5EC58603E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2316BAD0-290F-4CC5-A365-55136D0DB8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2316BAD0-290F-4CC5-A365-55136D0DB8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2316BAD0-290F-4CC5-A365-55136D0DB8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2316BAD0-290F-4CC5-A365-55136D0DB8A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
