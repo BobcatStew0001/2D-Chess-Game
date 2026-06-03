@@ -1,0 +1,6 @@
+﻿Next Steps:
+- Move.cs
+- Board.cs logic for the methods 
+- Individual piece logic
+-Logic Classes 
+-Controllers
