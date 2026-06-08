@@ -1,6 +1,31 @@
-﻿Next Steps:
-- Pieces Subfolder
-- Board.cs logic for the methods 
-- Individual piece logic
--Logic Classes 
--Controllers
+﻿To Do List
+Models
+    Pieces Folder
+        Bishop-Complete
+        King-Complete
+        Knight-Complete
+        Pawn-Complete
+        Queen-Complete
+        Rook-Complete
+        User.cs
+   Board-Complete
+   Move-Complete
+   Piece-Complete
+   PieceColor-Complete
+   PieceType-Complete
+   Position-Complete
+
+Logic
+    MoveValidator Class-Complete
+    GameState Class-Next Step
+    ChessAI Class
+    UserService.cs
+    
+ Contoller
+    GameController.cs
+    AuthController.cs
+    
+    Next Steps:
+Complete the Logic Portion and then loop back and complete the User.cs file.
+    
+    

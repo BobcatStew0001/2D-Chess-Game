@@ -28,6 +28,11 @@ public class Board
         
     }
 
+    public void RestorePiece(Piece piece, Position position)
+    {
+        
+    }
+
     public bool IsWithinBounds(Position position)
     {
         return true;
