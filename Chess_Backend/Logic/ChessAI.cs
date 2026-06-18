@@ -8,8 +8,34 @@ public class ChessAI
     
     public Move GetBestMove(Board board, PieceColor color)
     {
+        Piece[] pieces = board.GetAllPieces(color);
+        List<Move> allMoves = new List<Move>();
+        foreach (Piece piece in pieces)
+        {
+            foreach (Position move in piece.GetMove(board))
+            {
+                allMoves.Add(new Move(piece.Position, move));
+            }
+        }
+        var bestScore = int.MinValue;
+        Move bestMove = null;
+        foreach (Move move in allMoves)
+        {
+            Piece movingPiece = board.GetPieceAt(move.From); 
+            Piece targetPiece = board.GetPieceAt(move.To); 
+            board.MovePiece(move);
+            int score = MiniMax(board, 3, false);
+            board.RestorePiece(movingPiece, move.From);
+            board.RestorePiece(targetPiece, move.To);
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestMove = move;
+            }
+        }
+        return bestMove;
         
-    };
+    }
 
     public int MiniMax(Board board, int depth, bool isMaximizing)
     {

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Chess_Frontend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdf0d13234492073cdbbef792205c26566a77c67")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+846c92f616db2b912f6ee86845378d638ac47649")]
 [assembly: System.Reflection.AssemblyProductAttribute("Chess_Frontend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Chess_Frontend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
