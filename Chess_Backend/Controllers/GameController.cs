@@ -20,5 +20,11 @@ public class GameController:ControllerBase
     {
         return Ok(_gameState);
     }
-    
+    [HttpPost("resign")]
+    public IActionResult Resign()
+    {
+        _gameState.Resign();
+        return Ok(_gameState);
+    }
+
 }

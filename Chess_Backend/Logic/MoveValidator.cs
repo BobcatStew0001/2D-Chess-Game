@@ -25,12 +25,28 @@ public class MoveValidator
 
     public bool WouldLeaveKingInCheck(Move move, Board board)
     {
-        Piece movingPiece = board.GetPieceAt(move.From); 
-        Piece targetPiece = board.GetPieceAt(move.To); 
+        Piece movingPiece = board.GetPieceAt(move.From);
+        Piece targetPiece = board.GetPieceAt(move.To);
         board.MovePiece(move);
         bool isInCheck = IsInCheck(movingPiece.Color, board);
         board.RestorePiece(movingPiece,move.From);
         board.RestorePiece(targetPiece,move.To);
         return isInCheck;
+    }
+
+    public bool HasAnyLegalMoves(PieceColor color, Board board)
+    {
+        foreach (Piece piece in board.GetAllPieces(color))
+        {
+            foreach (Position target in piece.GetMove(board))
+            {
+                Move move = new Move(piece.Position, target);
+                if (IsValidMove(move, board))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
