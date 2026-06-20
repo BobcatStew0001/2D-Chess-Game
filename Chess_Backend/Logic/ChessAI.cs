@@ -83,6 +83,6 @@ public class ChessAI
             
         }
         return bestscore;
-    }; 
+    }
 
 }
