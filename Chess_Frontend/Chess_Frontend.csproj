@@ -10,4 +10,11 @@
         <ProjectReference Include="..\Chess_Backend\Chess_Backend.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\js\Board.js" />
+      <None Include="wwwroot\js\ChessAI.js" />
+      <None Include="wwwroot\js\GameState.js" />
+      <None Include="wwwroot\js\Move.js" />
+    </ItemGroup>
+
 </Project>
