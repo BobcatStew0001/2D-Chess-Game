@@ -11,12 +11,12 @@ const chessCol = {
 }
 
 
-for(var i=0;i<8;i++)
+for(let i=0;i<8;i++)
 {
- for (var j=0;j<8;j++)
+ for (let j=0;j<8;j++)
  {
      const newDiv = document.createElement('div');
-     newDiv.id = chessCol[j] + (8-i);
+     newDiv.dataset.position = chessCol[j] + (8-i);
      if((i + j)%2==0)             
      newDiv.className = "light"
      else

@@ -37,3 +37,10 @@ C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug
 C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\Chess_Frontend.pdb
 C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\Chess_Frontend.genruntimeconfig.cache
 C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\ref\Chess_Frontend.dll
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\bin\Debug\net9.0\Chess_Frontend.staticwebassets.runtime.json
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\compressed\8nfcrjukvp-q8upwzw9j6.gz
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\compressed\5vvtr0jjn4-3xmoo1ywks.gz
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\compressed\czt8jqx775-5ipweew5fc.gz
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\compressed\f5bqg308bc-5ipweew5fc.gz
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\compressed\c13nbu27go-5ipweew5fc.gz
+C:\Users\brown\OneDrive\Documents\ReposCSharp\ChessGame\Chess_Frontend\obj\Debug\net9.0\compressed\zefy6o1669-5gdcv8pqbi.gz

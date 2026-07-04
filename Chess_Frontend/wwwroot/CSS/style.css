@@ -1,0 +1,15 @@
+﻿#board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 640px;
+    height: 640px;
+}
+.light { background-color: #a9a9a9; }
+.dark { background-color: #404040; }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
