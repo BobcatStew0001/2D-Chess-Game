@@ -1,0 +1,149 @@
+CHESS GAME - REMAINING WORK
+Goal: a working frontend and backend that let two players play a full game of chess.
+Work through the phases in order. Check items off as you go.
+
+=====================================================================
+PHASE 1 - FIX THE BACKEND SO IT CAN RUN A GAME
+=====================================================================
+
+[ ] 1. The board is never set up
+    - GameState's constructor creates new Board(), but nothing calls SetupBoard().
+    - The board starts empty, so every move is rejected. If anything checks
+      for check, IsInCheck crashes because it can't find a king.
+    - Decide where setup should happen: in Board's constructor, or in GameState.
+
+[ ] 2. GameController has no route
+    - It's missing [ApiController] and [Route("api/[controller]")].
+      Compare it to MoveController.
+    - Without them, the endpoints sit at /state and /start instead of /api/game/...
+
+[ ] 3. "Start new game" doesn't start a new game
+    - StartNewGame just returns the current state.
+    - GameState is a singleton (only one exists), so you need a way to reset it:
+      new board, White to move, cleared move history, cleared position counts,
+      half-move clock back to 0.
+
+[ ] 4. Nothing checks whose turn it is
+    - MoveController.MakeMove checks whether a move is legal, but not whether the
+      piece belongs to the player whose turn it is. White could move Black's pieces.
+    - Think about where the check belongs: the controller, MoveValidator, or
+      GameState.MakeMove?
+
+[ ] 5. The board can't be sent as JSON (the biggest hidden problem)
+    - Board stores its pieces in a private field (_board). System.Text.Json only
+      serializes public properties, so GET /state sends "Board": {} and the
+      browser never sees any pieces.
+    - Look into a DTO (data transfer object): a simple shape built just for
+      sending, such as a list of { type, color, row, column } or an 8x8 grid of
+      strings.
+    - Also look up JsonStringEnumConverter. Without it, enums arrive as numbers
+      (WhoseTurn: 0) instead of "White".
+
+[ ] 6. CORS
+    - The frontend runs on port 5253 and the backend on port 5245. That counts
+      as a different origin, so the browser will block the fetch calls.
+    - Option A (recommended): enable CORS in the backend's Program.cs for the
+      frontend's address.
+    - Option B: serve the HTML/JS from the backend's own wwwroot and drop the
+      second project.
+    - Side note: Chess_Frontend.csproj has a ProjectReference to the backend.
+      The frontend only serves static files, so it doesn't need it.
+
+[ ] 7. (Strongly recommended) Add a "legal moves for this square" endpoint
+    - When a player clicks a piece, the frontend should highlight where it can go.
+    - You already have the parts: piece.GetMove(board) filtered through
+      MoveValidator.IsValidMove.
+    - This saves you from rewriting chess rules in JavaScript.
+
+TIP: Use Chess_Backend.http to test each endpoint by hand before you write any
+frontend code.
+MILESTONE: GET /api/game/state returns a JSON board with 32 pieces.
+
+=====================================================================
+PHASE 2 - BUILD THE FRONTEND
+=====================================================================
+Right now, Board.js draws 64 empty squares and ChessAI.js, GameState.js and
+Move.js are empty.
+
+[ ] 1. Agree on coordinates
+    - The squares use data-position="e2", but the backend uses Row/Column,
+      with row 0 being Black's back rank (rank 8).
+    - Work out the conversion, or store row/col on each square as well.
+
+[ ] 2. Load the state and draw the pieces
+    - fetch the game state and put pieces on the squares.
+    - Unicode characters are an easy way to start:
+      White: K Q R B N P = U+2654 to U+2659
+      Black: K Q R B N P = U+265A to U+265F
+
+[ ] 3. Click to move
+    - First click: select a piece, ask the backend for its legal moves, and
+      highlight them.
+    - Second click: POST /api/move/make with
+      { "from": { "row": r, "column": c }, "to": { "row": r, "column": c } }
+    - Redraw the board from the response. If the server rejects the move
+      (BadRequest), clear the selection.
+
+[ ] 4. Status display and buttons
+    - Show whose turn it is, and whether the game is in check, checkmate,
+      stalemate or a draw.
+    - Add "New Game" and "Resign" buttons.
+
+Suggested file split:
+    Board.js     -> drawing the board and pieces
+    Move.js      -> click handling and selection
+    GameState.js -> API calls and the status display
+
+MILESTONE: two people can play legal moves on one screen until checkmate.
+
+=====================================================================
+PHASE 3 - FINISH THE CHESS RULES
+=====================================================================
+
+[ ] Pawn bug: the two-square first move doesn't check the square in between,
+    so a pawn can jump over a piece (Pawn.cs).
+
+[ ] Promotion: a pawn that reaches the last rank stays a pawn and can never
+    move again. Promote it to a queen at minimum; letting the player choose
+    is a bonus.
+
+[ ] Castling
+    - King.GetMove never generates castling moves.
+    - Rules: neither the king nor the rook has moved, the squares between them
+      are empty, and the king is not in check, does not pass through an
+      attacked square, and does not land on one.
+    - Board.MovePiece only moves one piece. Castling also has to move the rook.
+
+[ ] En passant
+    - Pawn.GetMove never generates it. You'll need to know the last move
+      (MoveHistory) to see whether an enemy pawn just moved two squares.
+    - The captured pawn is NOT on the target square, so it has to be removed
+      separately.
+
+[ ] IsCapture is never set, so the 50-move rule counter (_halfMoveClock)
+    resets at the wrong times. The server could work this out from the board
+    itself instead of trusting the client.
+
+=====================================================================
+PHASE 4 - EXTRAS (NOT NEEDED FOR TWO-PLAYER)
+=====================================================================
+
+[ ] Save/Load
+    - LoadGame reads the file but throws the result away.
+    - It also hits the same private-field problem from Phase 1 step 5, plus
+      Piece is abstract, so JSON can't recreate pieces without help.
+
+[ ] AI
+    - It considers moves that leave its own king in check.
+    - It always plays Black.
+    - Hook it up to the frontend (single-player mode) once two-player works.
+
+[ ] Repo cleanup
+    - obj/ and bin/ are committed to git, which is why git status shows lots
+      of changes you didn't make. Add a .gitignore and stop tracking those
+      folders (look up "git rm --cached").
+    - The folder is named "CSS" but index.html links "css/style.css". That
+      works on Windows but breaks on Linux. Make the names match.
+
+[ ] Update the README roadmap and Chess_Backend/NextSteps.txt. Both are out
+    of date.
