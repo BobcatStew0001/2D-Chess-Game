@@ -6,18 +6,18 @@ Work through the phases in order. Check items off as you go.
 PHASE 1 - FIX THE BACKEND SO IT CAN RUN A GAME
 =====================================================================
 
-[ ] 1. The board is never set up
+[✔️ ] 1. The board is never set up
     - GameState's constructor creates new Board(), but nothing calls SetupBoard().
     - The board starts empty, so every move is rejected. If anything checks
       for check, IsInCheck crashes because it can't find a king.
     - Decide where setup should happen: in Board's constructor, or in GameState.
 
-[ ] 2. GameController has no route
+[✔️] 2. GameController has no route
     - It's missing [ApiController] and [Route("api/[controller]")].
       Compare it to MoveController.
     - Without them, the endpoints sit at /state and /start instead of /api/game/...
 
-[ ] 3. "Start new game" doesn't start a new game
+[✔️] 3. "Start new game" doesn't start a new game
     - StartNewGame just returns the current state.
     - GameState is a singleton (only one exists), so you need a way to reset it:
       new board, White to move, cleared move history, cleared position counts,

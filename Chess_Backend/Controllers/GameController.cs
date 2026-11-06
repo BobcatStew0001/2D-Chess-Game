@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chess_Backend.Controllers;
+[ApiController]
+[Route("api/[controller]")]
 
 public class GameController:ControllerBase
 {
@@ -18,6 +20,7 @@ public class GameController:ControllerBase
     [HttpPost("start")]
     public IActionResult StartNewGame()
     {
+        _gameState.StartNewGame();
         return Ok(_gameState);
     }
     [HttpPost("resign")]

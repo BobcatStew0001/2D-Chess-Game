@@ -32,6 +32,16 @@ public class GameState
         }
     }
 
+    public void StartNewGame()
+    {
+        State = CurrentState.InProgress;
+        MoveHistory.Clear();
+        _positionCounts.Clear();
+        _halfMoveClock = 0;
+        WhoseTurn = PieceColor.White;
+        Board = new Board();
+    }
+
     public void MakeMove(Move move)
     {
         if (State == CurrentState.InProgress || State == CurrentState.Check)

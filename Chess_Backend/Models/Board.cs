@@ -6,6 +6,11 @@ public class Board
 {
     Piece[,] _board = new Piece[8, 8];
 
+    public Board()
+    {
+        SetupBoard();
+    }
+
     public void SetupBoard()
     {
         for (int col = 0; col < 8; col++)
