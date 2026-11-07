@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Chess_Backend.Logic;
 using Chess_Backend.Models;
+using Chess_Backend.DTOS;
 
 namespace Chess_Backend.Controllers;
 [ApiController]
@@ -21,17 +22,17 @@ public class MoveController:ControllerBase
     [HttpPost("validate")]
     public IActionResult ValidateMove([FromBody] Move move)
     {
-        bool isValid = _moveValidator.IsValidMove(move, _gameState.Board);
+        bool isValid = _moveValidator.IsValidMove(move, _gameState.Board, _gameState.WhoseTurn);
         return Ok(isValid);
     }
     [HttpPost("make")]
     public IActionResult MakeMove([FromBody] Move move)
     {
-        bool isValid = _moveValidator.IsValidMove(move, _gameState.Board);
+        bool isValid = _moveValidator.IsValidMove(move, _gameState.Board, _gameState.WhoseTurn);
         if (isValid)
         {
             _gameState.MakeMove(move);
-            return Ok(_gameState);
+            return Ok(GameStateDTO.FromGameState(_gameState));
         }
         else
         {

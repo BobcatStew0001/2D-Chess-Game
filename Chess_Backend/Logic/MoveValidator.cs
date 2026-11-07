@@ -5,10 +5,11 @@ namespace Chess_Backend.Logic;
 
 public class MoveValidator
 {
-    public bool IsValidMove(Move move, Board board)
+    public bool IsValidMove(Move move, Board board, PieceColor whoseTurn)
     {
         Piece piece = board.GetPieceAt(move.From); 
         if (piece == null) return false;
+        if(piece.Color != whoseTurn) return false;
         if (!piece.GetMove(board).Contains(move.To) || WouldLeaveKingInCheck(move, board))
         {
             return false; 
@@ -41,7 +42,7 @@ public class MoveValidator
             foreach (Position target in piece.GetMove(board))
             {
                 Move move = new Move(piece.Position, target);
-                if (IsValidMove(move, board))
+                if (IsValidMove(move, board, color))
                 {
                     return true;
                 }

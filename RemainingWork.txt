@@ -23,13 +23,13 @@ PHASE 1 - FIX THE BACKEND SO IT CAN RUN A GAME
       new board, White to move, cleared move history, cleared position counts,
       half-move clock back to 0.
 
-[ ] 4. Nothing checks whose turn it is
+[✔️ ] 4. Nothing checks whose turn it is
     - MoveController.MakeMove checks whether a move is legal, but not whether the
       piece belongs to the player whose turn it is. White could move Black's pieces.
     - Think about where the check belongs: the controller, MoveValidator, or
       GameState.MakeMove?
 
-[ ] 5. The board can't be sent as JSON (the biggest hidden problem)
+[✔️] 5. The board can't be sent as JSON (the biggest hidden problem)
     - Board stores its pieces in a private field (_board). System.Text.Json only
       serializes public properties, so GET /state sends "Board": {} and the
       browser never sees any pieces.

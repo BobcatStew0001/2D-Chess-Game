@@ -1,4 +1,5 @@
 ﻿using Chess_Backend.Logic;
+using Chess_Backend.DTOS;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chess_Backend.Controllers;
@@ -15,19 +16,19 @@ public class GameController:ControllerBase
     [HttpGet("state")]
     public IActionResult GetGameState()
     {
-        return Ok(_gameState);
+        return Ok(GameStateDTO.FromGameState(_gameState));
     }
     [HttpPost("start")]
     public IActionResult StartNewGame()
     {
         _gameState.StartNewGame();
-        return Ok(_gameState);
+        return Ok(GameStateDTO.FromGameState(_gameState));
     }
     [HttpPost("resign")]
     public IActionResult Resign()
     {
         _gameState.Resign();
-        return Ok(_gameState);
+        return Ok(GameStateDTO.FromGameState(_gameState));
     }
 
 }
