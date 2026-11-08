@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "md4seUdb0dk=",
+  "dgSpecHash": "U4PPZpmXVpU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\brown\\OneDrive\\Documents\\ReposCSharp\\ChessGame\\Chess_Frontend\\Chess_Frontend.csproj",
+  "projectFilePath": "G:\\My Drive\\ReposCSharp\\ChessGame\\Chess_Frontend\\Chess_Frontend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\brown\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.16\\microsoft.aspnetcore.openapi.9.0.16.nupkg.sha512",
     "C:\\Users\\brown\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
