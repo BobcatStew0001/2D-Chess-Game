@@ -39,7 +39,7 @@ PHASE 1 - FIX THE BACKEND SO IT CAN RUN A GAME
     - Also look up JsonStringEnumConverter. Without it, enums arrive as numbers
       (WhoseTurn: 0) instead of "White".
 
-[ ] 6. CORS
+[X] 6. CORS
     - The frontend runs on port 5253 and the backend on port 5245. That counts
       as a different origin, so the browser will block the fetch calls.
     - Option A (recommended): enable CORS in the backend's Program.cs for the
@@ -49,7 +49,7 @@ PHASE 1 - FIX THE BACKEND SO IT CAN RUN A GAME
     - Side note: Chess_Frontend.csproj has a ProjectReference to the backend.
       The frontend only serves static files, so it doesn't need it.
 
-[ ] 7. (Strongly recommended) Add a "legal moves for this square" endpoint
+[X] 7. (Strongly recommended) Add a "legal moves for this square" endpoint
     - When a player clicks a piece, the frontend should highlight where it can go.
     - You already have the parts: piece.GetMove(board) filtered through
       MoveValidator.IsValidMove.

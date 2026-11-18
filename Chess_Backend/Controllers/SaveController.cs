@@ -2,7 +2,6 @@
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Chess_Backend.Logic;
-using Microsoft.OpenApi.Writers;
 
 namespace Chess_Backend.Controllers; 
 [ApiController]

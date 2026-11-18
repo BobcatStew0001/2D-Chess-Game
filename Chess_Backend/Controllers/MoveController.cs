@@ -19,6 +19,24 @@ public class MoveController:ControllerBase
         _moveValidator = moveValidator;
     }
 
+    [HttpGet("legalmoves/{row}/{column}")]
+    public IActionResult LegalMoves(int row, int column)
+    {
+        Position from = new Position(row, column);
+        Piece piece = _gameState.Board.GetPieceAt(from);
+
+        if (piece == null || piece.Color != _gameState.WhoseTurn)
+        {
+            return Ok(new List<Position>());
+        }
+
+        List<Position> legalMoves = piece.GetMove(_gameState.Board)
+            .Where(target => _moveValidator.IsValidMove(new Move(from, target), _gameState.Board, _gameState.WhoseTurn))
+            .ToList();
+
+        return Ok(legalMoves);
+    }
+
     [HttpPost("validate")]
     public IActionResult ValidateMove([FromBody] Move move)
     {
