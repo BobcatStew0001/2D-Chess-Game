@@ -39,7 +39,7 @@ PHASE 1 - FIX THE BACKEND SO IT CAN RUN A GAME
     - Also look up JsonStringEnumConverter. Without it, enums arrive as numbers
       (WhoseTurn: 0) instead of "White".
 
-[ ] 6. CORS
+[✔️] 6. CORS
     - The frontend runs on port 5253 and the backend on port 5245. That counts
       as a different origin, so the browser will block the fetch calls.
     - Option A (recommended): enable CORS in the backend's Program.cs for the

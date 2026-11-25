@@ -1,45 +1,41 @@
-﻿using System.Text.Json;
-using System.IO;
+﻿using Chess_Backend.Logic;
 using Microsoft.AspNetCore.Mvc;
-using Chess_Backend.Logic;
-using Microsoft.OpenApi.Writers;
 
-namespace Chess_Backend.Controllers; 
+namespace Chess_Backend.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
-
-public class SaveController:ControllerBase
+public class SaveController : ControllerBase
 {
-    private readonly GameState _gameState;
-    public SaveController(GameState gameState)
-    {
-        _gameState = gameState;
-    }
+    private readonly GameLibrary _games;
+    private readonly PlayerSessions _sessions;
 
-    
+    public SaveController(GameLibrary games, PlayerSessions sessions)
+    {
+        _games = games;
+        _sessions = sessions;
+    }
 
     [HttpPost("save")]
     public IActionResult SaveGame()
     {
-        Directory.CreateDirectory("SavedGames");
-        string json = JsonSerializer.Serialize(_gameState);
-        System.IO.File.WriteAllText("SavedGames/save.json", json);
+        if (_sessions.Find(Request) == null)
+        {
+            return Unauthorized("Sign in first.");
+        }
+
+        _games.Flush();
         return Ok("Game saved successfully");
     }
 
     [HttpGet("load")]
     public IActionResult LoadGame()
     {
-        string myFilePath = "SavedGames/save.json";
-        if (System.IO.File.Exists(myFilePath))
+        if (_sessions.Find(Request) == null)
         {
-            string jsonstring = System.IO.File.ReadAllText(myFilePath);
-            var data = JsonSerializer.Deserialize<GameState>(jsonstring);
-            return Ok("Game Loaded");
+            return Unauthorized("Sign in first.");
         }
-        else
-        {
-            return BadRequest("No game found");
-        }
+
+        return Ok("Saved games load when the server starts, and they stay up to date after every move.");
     }
 }

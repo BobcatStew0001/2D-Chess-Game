@@ -13,6 +13,7 @@ public abstract class Piece
         Color = color;
         Type = type;
         Position = position;
+        HasMoved = hasMoved;
     }
     
     public abstract Position[] GetMove(Board board);

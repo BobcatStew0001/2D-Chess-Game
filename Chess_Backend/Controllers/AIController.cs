@@ -1,31 +1,35 @@
 ﻿using Chess_Backend.Logic;
-using Chess_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chess_Backend.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
-
-public class AIController:ControllerBase
+public class AIController : ControllerBase
 {
-    private readonly ChessAI _ai;
-    private readonly GameState _gameState;
-    
-    public AIController(GameState gameState, ChessAI ai)
+    private readonly GameLibrary _games;
+    private readonly PlayerSessions _sessions;
+
+    public AIController(GameLibrary games, PlayerSessions sessions)
     {
-        _gameState = gameState;
-        _ai = ai;
-      
-        
+        _games = games;
+        _sessions = sessions;
     }
-[HttpPost("aimove")]
-public IActionResult AIMove()
-{
-    var bestMove = _ai.GetBestMove(_gameState.Board, PieceColor.Black);
-    _gameState.MakeMove(bestMove);
-    return Ok(bestMove);
 
+    [HttpPost("aimove")]
+    public IActionResult AIMove()
+    {
+        Session? session = _sessions.Find(Request);
+        if (session == null)
+        {
+            return Unauthorized("Sign in first.");
+        }
 
-}
-    
+        if (session.Mode != Accounts.ComputerMode)
+        {
+            return BadRequest("The computer only moves in a computer game.");
+        }
+
+        return Ok(_games.View(session.Username, Accounts.ComputerMode));
+    }
 }

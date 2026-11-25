@@ -42,10 +42,33 @@ public class GameState
         Board = new Board();
     }
 
+    public int HalfMoveClock => _halfMoveClock;
+
+    public Dictionary<string, int> CopyPositionCounts()
+    {
+        return new Dictionary<string, int>(_positionCounts);
+    }
+
+    public void RestoreProgress(int halfMoveClock, Dictionary<string, int>? positionCounts)
+    {
+        _halfMoveClock = halfMoveClock;
+        _positionCounts.Clear();
+        if (positionCounts == null)
+        {
+            return;
+        }
+
+        foreach (KeyValuePair<string, int> pair in positionCounts)
+        {
+            _positionCounts[pair.Key] = pair.Value;
+        }
+    }
+
     public void MakeMove(Move move)
     {
         if (State == CurrentState.InProgress || State == CurrentState.Check)
         {
+            _moveValidator.Annotate(move, Board);
             Piece piece = Board.GetPieceAt(move.From);
             bool resetsHalfMoveClock = piece.Type == PieceType.Pawn || move.IsCapture;
 

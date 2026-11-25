@@ -1,43 +1,53 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Chess_Backend.Logic;
 using Chess_Backend.Models;
-using Chess_Backend.DTOS;
 
 namespace Chess_Backend.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
-
-public class MoveController:ControllerBase
+public class MoveController : ControllerBase
 {
-    private readonly GameState _gameState;
-    
-    private readonly MoveValidator _moveValidator;
-    
-    public MoveController(GameState gameState, MoveValidator moveValidator)
+    private readonly GameLibrary _games;
+    private readonly PlayerSessions _sessions;
+
+    public MoveController(GameLibrary games, PlayerSessions sessions)
     {
-        _gameState = gameState;
-        _moveValidator = moveValidator;
+        _games = games;
+        _sessions = sessions;
     }
 
     [HttpPost("validate")]
     public IActionResult ValidateMove([FromBody] Move move)
     {
-        bool isValid = _moveValidator.IsValidMove(move, _gameState.Board, _gameState.WhoseTurn);
-        return Ok(isValid);
+        Session? session = _sessions.Find(Request);
+        if (session == null)
+        {
+            return Unauthorized("Sign in first.");
+        }
+
+        if (session.Mode != Accounts.FriendMode && session.Mode != Accounts.ComputerMode)
+        {
+            return Ok(false);
+        }
+
+        return Ok(_games.Validate(session.Username, session.Mode, move));
     }
+
     [HttpPost("make")]
     public IActionResult MakeMove([FromBody] Move move)
     {
-        bool isValid = _moveValidator.IsValidMove(move, _gameState.Board, _gameState.WhoseTurn);
-        if (isValid)
+        Session? session = _sessions.Find(Request);
+        if (session == null)
         {
-            _gameState.MakeMove(move);
-            return Ok(GameStateDTO.FromGameState(_gameState));
+            return Unauthorized("Sign in first.");
         }
-        else
-        {
-            return BadRequest("Invalid move");
-        }
-    }
 
+        if (session.Mode != Accounts.FriendMode && session.Mode != Accounts.ComputerMode)
+        {
+            return BadRequest("Choose a friend game or a computer game.");
+        }
+
+        return Ok(_games.MakeMove(session.Username, session.Mode, move));
+    }
 }

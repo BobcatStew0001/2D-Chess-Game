@@ -9,6 +9,14 @@ public class GameStateDTO
     public List<Move> MoveHistory { get; set; } = new();
     public CurrentState State { get; set; }
     public List<PieceDTO> Pieces { get; set; } = new();
+    public string Mode { get; set; } = "";
+    public string You { get; set; } = "";
+    public PieceColor? YourColor { get; set; }
+    public bool YourTurn { get; set; }
+    public bool OpponentJoined { get; set; }
+    public string? WhitePlayer { get; set; }
+    public string? BlackPlayer { get; set; }
+    public string? ResignedBy { get; set; }
 
     public static GameStateDTO FromGameState(GameState gameState)
     {

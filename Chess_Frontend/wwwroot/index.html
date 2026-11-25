@@ -2,16 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Chess Champion</title>
-    <link rel="stylesheet" href="css/style.css"/>   
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#001a4d">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Bub's Chess">
+    <title>Bub's Chess Game</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<div id="board">
-</div>
-<script src="js/Board.js"></script>
-<script src="js/ChessAI.js"></script>
-<script src="js/GameState.js"></script>
-<script src="js/Move.js"></script>
+<header class="site-header">
+    <h1>Bub's Chess Game</h1>
+</header>
+<section id="gate" class="gate">
+    <form id="login-form" class="card">
+        <h2>Sign in</h2>
+        <label>
+            Name
+            <input id="username" name="username" autocomplete="username" required>
+        </label>
+        <label>
+            Password
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Sign in</button>
+        <p id="login-message">Sign in as Bub or Friend.</p>
+    </form>
+    <div id="lobby" class="card" hidden>
+        <h2>Choose a game</h2>
+        <p id="welcome"></p>
+        <div class="actions">
+            <button id="play-friend" type="button">Play a friend</button>
+            <button id="play-computer" type="button">Play the computer</button>
+            <button id="logout" type="button">Log out</button>
+        </div>
+        <p class="share-note">On the other phone or computer, open <strong id="share-address"></strong> and sign in as the other player. On an iPhone, use Share, then Add to Home Screen. The first person to sit down plays White.</p>
+    </div>
+</section>
+<main id="game-screen" class="layout" hidden>
+    <section class="board-panel" aria-label="Chessboard">
+        <div class="rank-labels" aria-hidden="true">
+            <span>8</span><span>7</span><span>6</span><span>5</span>
+            <span>4</span><span>3</span><span>2</span><span>1</span>
+        </div>
+        <div class="board-stack">
+            <div id="board"></div>
+            <div class="file-labels" aria-hidden="true">
+                <span>a</span><span>b</span><span>c</span><span>d</span>
+                <span>e</span><span>f</span><span>g</span><span>h</span>
+            </div>
+        </div>
+    </section>
+    <aside class="side-panel">
+        <p id="status" class="status">Loading game...</p>
+        <p id="detail" class="detail"></p>
+        <p id="message" class="message" role="status"></p>
+        <div class="actions">
+            <button id="new-game" type="button">New Game</button>
+            <button id="resign" type="button">Resign</button>
+            <button id="back-to-menu" type="button">Back to menu</button>
+        </div>
+        <p class="saved-note">The server saves this game after every move.</p>
+        <div id="promotion" class="promotion" hidden>
+            <div class="card">
+                <h2>Promote the pawn</h2>
+                <div class="actions">
+                    <button type="button" data-piece="Queen">Queen</button>
+                    <button type="button" data-piece="Rook">Rook</button>
+                    <button type="button" data-piece="Bishop">Bishop</button>
+                    <button type="button" data-piece="Knight">Knight</button>
+                </div>
+            </div>
+        </div>
+        <h2>Moves</h2>
+        <ol id="history"></ol>
+    </aside>
+</main>
+<script src="js/main.js" type="module"></script>
 </body>
 </html>

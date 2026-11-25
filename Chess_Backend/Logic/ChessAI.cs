@@ -4,37 +4,46 @@ namespace Chess_Backend.Logic;
 
 public class ChessAI
 {
-    private BoardEvaluator _evaluator = new BoardEvaluator();
-    
-    public Move GetBestMove(Board board, PieceColor color)
+    private readonly BoardEvaluator _evaluator;
+    private readonly MoveValidator _moveValidator;
+
+    public ChessAI(MoveValidator moveValidator, BoardEvaluator evaluator)
     {
-        Piece[] pieces = board.GetAllPieces(color);
-        List<Move> allMoves = new List<Move>();
-        foreach (Piece piece in pieces)
+        _moveValidator = moveValidator;
+        _evaluator = evaluator;
+    }
+    
+    public Move? GetBestMove(Board board, PieceColor color)
+    {
+        List<Move> legalMoves = new List<Move>();
+        foreach (Piece piece in board.GetAllPieces(color))
         {
-            foreach (Position move in piece.GetMove(board))
+            foreach (Move candidate in _moveValidator.CandidateMoves(piece, board))
             {
-                allMoves.Add(new Move(piece.Position, move));
+                if (_moveValidator.IsValidMove(candidate, board, color))
+                {
+                    legalMoves.Add(candidate);
+                }
             }
         }
-        var bestScore = int.MinValue;
-        Move bestMove = null;
-        foreach (Move move in allMoves)
+
+        Move? bestMove = null;
+        int bestScore = int.MinValue;
+        foreach (Move move in legalMoves)
         {
-            Piece movingPiece = board.GetPieceAt(move.From); 
-            Piece targetPiece = board.GetPieceAt(move.To); 
+            Piece movingPiece = board.GetPieceAt(move.From);
+            Piece targetPiece = board.GetPieceAt(move.To);
             board.MovePiece(move);
             int score = MiniMax(board, 3, false);
-            board.RestorePiece(movingPiece, move.From);
-            board.RestorePiece(targetPiece, move.To);
-            if (score > bestScore)
+            board.UndoMove(move, movingPiece, targetPiece);
+            if (bestMove == null || score > bestScore)
             {
                 bestScore = score;
                 bestMove = move;
             }
         }
+
         return bestMove;
-        
     }
 
     public int MiniMax(Board board, int depth, bool isMaximizing)
@@ -59,17 +68,12 @@ public class ChessAI
         foreach (Move move in allMoves)
         {
 
+            _moveValidator.Annotate(move, board);
             Piece movingPiece = board.GetPieceAt(move.From);
             Piece targetPiece = board.GetPieceAt(move.To);
-
-
             board.MovePiece(move);
-
-
             int score = MiniMax(board, depth - 1, !isMaximizing);
-
-            board.RestorePiece(movingPiece, move.From);
-            board.RestorePiece(targetPiece, move.To);
+            board.UndoMove(move, movingPiece, targetPiece);
 
             if (isMaximizing && score > bestscore)
             {

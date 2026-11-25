@@ -67,6 +67,16 @@ public class Pawn : Piece
 
                 if (offsets[i, 1] == 0 && pieceAtSquare == null)
                 {
+                    if (Math.Abs(offsets[i, 0]) == 2)
+                    {
+                        int step = offsets[i, 0] > 0 ? 1 : -1;
+                        Position between = new Position(Position.Row + step, Position.Column);
+                        if (board.GetPieceAt(between) != null)
+                        {
+                            continue;
+                        }
+                    }
+
                     validMoves.Add(newPosition);
                 }
 
@@ -76,6 +86,28 @@ public class Pawn : Piece
                 }
             }
         }
+
+        Move? lastMove = board.LastMove;
+        if (lastMove != null
+            && Math.Abs(lastMove.From.Row - lastMove.To.Row) == 2
+            && lastMove.From.Column == lastMove.To.Column)
+        {
+            Piece enemyPawn = board.GetPieceAt(lastMove.To);
+            if (enemyPawn != null
+                && enemyPawn.Type == PieceType.Pawn
+                && enemyPawn.Color != Color
+                && enemyPawn.Position.Row == Position.Row
+                && Math.Abs(enemyPawn.Position.Column - Position.Column) == 1)
+            {
+                int forward = Color == PieceColor.White ? -1 : 1;
+                Position landing = new Position(Position.Row + forward, enemyPawn.Position.Column);
+                if (board.IsWithinBounds(landing) && board.GetPieceAt(landing) == null)
+                {
+                    validMoves.Add(landing);
+                }
+            }
+        }
+
         return validMoves.ToArray();
     }
 }
